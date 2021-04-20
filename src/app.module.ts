@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { AdminModule } from './modules/admin/admin.module';
+
+
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
@@ -14,8 +17,8 @@ import { AppService } from './app.service';
     entities: ["dist/**/*.entity.{js,ts}"],
     synchronize: true,
     logging: true
-  }),],
-  controllers: [AppController],
+  }), AdminModule,],
+  controllers: [AppController,],
   providers: [AppService],
 })
 export class AppModule {}

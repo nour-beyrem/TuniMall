@@ -8,7 +8,7 @@ import { clientEntity } from './client.entity';
 @Entity('livraison')
 export class livraisonEntity extends TimestampEntity{
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
     @Column({})
     cout: number;
     @Column({type: 'varchar'})

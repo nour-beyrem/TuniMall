@@ -5,7 +5,7 @@ import { TimestampEntity } from "./timestamp-entity";
 @Entity('complain')
 export class complainEntity extends TimestampEntity{
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
     @Column({type: 'varchar'})
     sujet: string;
     @Column({type: 'varchar'})

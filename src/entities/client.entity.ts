@@ -1,12 +1,11 @@
-import { complainEntity } from './complain.entity';
 import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { TimestampEntity } from "./timestamp-entity";
-import { livraisonEntity } from './livraison.entity';
+
 
 @Entity('client')
 export class clientEntity extends TimestampEntity{
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
     @Column({type: 'varchar', length: 50})
     prenom: string;
     @Column({type: 'varchar', length: 50})

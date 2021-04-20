@@ -4,7 +4,7 @@ import { TimestampEntity } from "./timestamp-entity";
 @Entity('admin')
 export class adminEntity extends TimestampEntity{
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
     @Column({type: 'varchar', length: 50})
     prenom: string;
     @Column({type: 'varchar', length: 50})

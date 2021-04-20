@@ -5,7 +5,7 @@ import { TimestampEntity } from "./timestamp-entity";
 export class produitEntity extends TimestampEntity{
     
     @PrimaryColumn({ unique:true})
-    codeBar: number;
+    codeBar: string;
    
     @Column({type: 'varchar', length: 50})
     nom: string;
