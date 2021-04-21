@@ -1,7 +1,8 @@
 import { AddAdminDto } from './../../DTO/admin/addAdmin';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { adminEntity } from 'src/entities/admin.entity';
 import { AdminService } from 'src/services/admin/admin-service.service';
+import { updateAdminDto } from 'src/DTO/admin/updateAdmin';
 
 
 @Controller('admin')
@@ -40,4 +41,13 @@ export class AdminController {
     ): Promise<unknown> {
       return this.adminService.deleteAdmin(id);
     }
+
+
+    @Put(':id')
+  updateAdmin(
+    @Param('id')id : string,
+    @Body() newAdmin: updateAdminDto
+  ): Promise<adminEntity> {
+    return this.adminService.putAdmin(id, newAdmin);
+  }
 }

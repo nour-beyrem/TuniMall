@@ -4,6 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { AdminModule } from './modules/admin/admin.module';
+import { ClientService } from './services/client/client.service';
+import { ProduitService } from './services/produit/produit.service';
+import { LivreurService } from './services/livreur/livreur.service';
+import { LivraisonService } from './services/livraison/livraison.service';
+import { ComplainService } from './services/complain/complain.service';
 
 
 @Module({
@@ -19,6 +24,6 @@ import { AdminModule } from './modules/admin/admin.module';
     logging: true
   }), AdminModule,],
   controllers: [AppController,],
-  providers: [AppService],
+  providers: [AppService, ClientService, ProduitService, LivreurService, LivraisonService, ComplainService],
 })
 export class AppModule {}
