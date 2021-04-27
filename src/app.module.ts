@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { AdminModule } from './modules/admin/admin.module';
-import { ClientService } from './services/client/client.service';
+
 import { ProduitService } from './services/produit/produit.service';
 import { LivreurService } from './services/livreur/livreur.service';
 import { LivraisonService } from './services/livraison/livraison.service';
@@ -14,6 +14,7 @@ import { LivreurModule } from './modules/livreur/livreur.module';
 import { ProduitModule } from './modules/produit/produit.module';
 import { LivraisonModule } from './modules/livraison/livraison.module';
 import { ComplainModule } from './modules/complain/complain.module';
+import { ClientService } from './services/client/client.service';
 
 
 @Module({
@@ -29,6 +30,6 @@ import { ComplainModule } from './modules/complain/complain.module';
     logging: true
   }), AdminModule, ClientModule, LivreurModule, ProduitModule, LivraisonModule, ComplainModule,],
   controllers: [AppController,],
-  providers: [AppService, ClientService, ProduitService, LivreurService, LivraisonService, ComplainService],
+  providers: [AppService],
 })
 export class AppModule {}
