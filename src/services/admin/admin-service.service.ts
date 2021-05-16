@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddAdminDto } from 'src/DTO/admin/addAdmin';
 import { updateAdminDto } from 'src/DTO/admin/updateAdmin';
@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { async } from 'rxjs';
 import { LoginCredentialsDto } from 'src/DTO/admin/loginUser';
 import { JwtService } from '@nestjs/jwt';
+import { UserRoleEnum } from 'src/enums/user-role.enum';
 
 @Injectable()
 export class AdminService {
@@ -21,58 +22,103 @@ export class AdminService {
      {}
     
     
-    getUsers()
+    async getUsers(user): Promise<adminEntity[]>
     {
-        return this.adminRepository.find();
+      if (user.role === UserRoleEnum.ADMINACHAT ||user.role === UserRoleEnum.ADMINAJOUT )
+         return await this.adminRepository.find();
+      throw new UnauthorizedException();
     }
 
 
-    async getById(id:string): Promise<adminEntity>
+    async getById(id:string, user): Promise<adminEntity>
     {
       const admin =  await this.adminRepository.findOne(id);
 
-      if (admin)
-        return admin;
-      else
-      throw new NotFoundException(`admin d'id ${id} n'existe pas`);
+      if (!admin)
+        { 
+          throw new NotFoundException(`admin d'id ${id} n'existe pas`);
+        }
+        
+      if (user.role === UserRoleEnum.ADMINACHAT ||user.role === UserRoleEnum.ADMINAJOUT || admin.id === user.id)
+         return admin;
+
+      else 
+      throw new UnauthorizedException();
+      
     }
 
-    async getByRole(role:string): Promise<adminEntity[]>
+ 
+     
+    async getByRole(role:string,user): Promise<adminEntity[]>
     {
-       return await this.adminRepository.find({role});
+         
+     if (user.role === UserRoleEnum.ADMINACHAT ||user.role === UserRoleEnum.ADMINAJOUT || user.role === role)
+        return await this.adminRepository.find({role});
+
+     else 
+        throw new UnauthorizedException();
     }
 
-    async addAdmin(userData: AddAdminDto) : Promise<Partial<adminEntity>>{
-      const user = this.adminRepository.create({
-        ...userData
-      });
+    async addAdmin(userData: AddAdminDto, user1) : Promise<Partial<adminEntity>>{
 
-      user.salt = await bcrypt.genSalt();
-      user.password = await bcrypt.hash(user.password, user.salt);
-      try {
-        await this.adminRepository.save(user);
-      } catch (e) {
-        throw new ConflictException(`le email ou le username doit être unique`);
+      if (user1.role === UserRoleEnum.ADMINAJOUT ) {
+        const user = this.adminRepository.create({
+          ...userData
+        });
+        user.salt = await bcrypt.genSalt();
+        user.password = await bcrypt.hash(user.password, user.salt);
+        try {
+          await this.adminRepository.save(user);
+        } catch (e) {
+          throw new ConflictException(`le email ou le username doit être unique`);
+        }
+        return {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        };
       }
-      return {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role
-      };
+
+      else 
+      throw new UnauthorizedException();
+      
+      
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
     }
 
-  async deleteAdmin(id: string): Promise<unknown> {
-    const deletedAdmin = await this.adminRepository.delete(id);
-    if(! deletedAdmin) {
-      throw new NotFoundException(`admin d'id ${id} n'existe pas`);
-    } else {
-      return deletedAdmin;
+  async deleteAdmin(id: string, user): Promise<unknown> {
+
+    if (user.role === UserRoleEnum.ADMINAJOUT ){
+      const deletedAdmin = await this.adminRepository.delete(id);
+      if(! deletedAdmin) {
+        throw new NotFoundException(`admin d'id ${id} n'existe pas`);
+      } else {
+        return deletedAdmin;
+      }
     }
+    else 
+      throw new UnauthorizedException();
+       
+    
   }
     
     
-  async putAdmin(id: string, newAdmin: updateAdminDto): Promise<adminEntity> {
+  async putAdmin(id: string, newAdmin: updateAdminDto, user): Promise<adminEntity> {
     const updatedAdmin = await this.adminRepository.preload({
       id,
       ...newAdmin
@@ -80,9 +126,14 @@ export class AdminService {
     console.log('Valeur de retour de preload : ', updatedAdmin);
   if (! updatedAdmin) {
     throw new NotFoundException(`admin d'id ${id} n'existe pas`);
-  } else {
+  } 
+  if (user.role === UserRoleEnum.ADMINAJOUT || updatedAdmin.id === user.id){
     return await this.adminRepository.save(updatedAdmin);
   }
+  else 
+    throw new UnauthorizedException();
+     
+  
   }
 
 

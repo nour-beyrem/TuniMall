@@ -38,7 +38,7 @@ export class adminEntity extends TimestampEntity{
 
    @OneToMany(type=>livraisonEntity, (livraison) =>livraison.livreur,  {
     nullable: true
-  })
+     })
     livraisons: livraisonEntity[]; 
 
 

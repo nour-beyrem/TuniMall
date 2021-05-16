@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { shopEntity } from './shop.entity';
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { TimestampEntity } from "./timestamp-entity";
 
 @Entity('produit')
@@ -23,6 +24,13 @@ export class produitEntity extends TimestampEntity{
     @Column({type: 'varchar'})
       marque: string;
    
+      @ManyToOne( type=>shopEntity, (shop)=> shop.produits,
+      {
+        
+        nullable: true
+       
+      })
+       shop: shopEntity;
    
 
 

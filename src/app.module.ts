@@ -13,6 +13,8 @@ import { ProduitModule } from './modules/produit/produit.module';
 import { LivraisonModule } from './modules/livraison/livraison.module';
 import { ComplainModule } from './modules/complain/complain.module';
 import { ConfigModule } from '@nestjs/config';
+import { ShopModule } from './modules/shop/shop.module';
+import { ShopService } from './services/shop/shop.service';
 
 
 
@@ -30,7 +32,7 @@ import { ConfigModule } from '@nestjs/config';
   }), ConfigModule.forRoot({
     isGlobal: true
     
-  }), AdminModule, ProduitModule, LivraisonModule, ComplainModule,],
+  }), AdminModule, ProduitModule, LivraisonModule, ComplainModule, ShopModule,],
   controllers: [AppController,],
   providers: [AppService],
 })
