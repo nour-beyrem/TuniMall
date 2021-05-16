@@ -1,9 +1,9 @@
 import { produitEntity } from './produit.entity';
-import { livreurEntity } from './livreur.entity';
-import { type } from "node:os";
+
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { TimestampEntity } from "./timestamp-entity";
-import { clientEntity } from './client.entity';
+
+import { adminEntity } from './admin.entity';
 
 @Entity('livraison')
 export class livraisonEntity extends TimestampEntity{
@@ -14,11 +14,20 @@ export class livraisonEntity extends TimestampEntity{
     @Column({type: 'varchar'})
     adresse: string;
 
-    @ManyToOne(type => livreurEntity)
-    livreur: livreurEntity; 
+    @Column({type: 'boolean'})
+    approuver: boolean;
 
-    @ManyToOne( type=>clientEntity)
-    client: clientEntity;
+    @Column({type: 'boolean'})
+    terminer: boolean;
+
+    @ManyToOne(type => adminEntity, (livreur)=> livreur.livraisons,  {
+        
+        nullable: true
+      })
+    livreur: adminEntity; 
+
+    @ManyToOne( type=>adminEntity)
+    client: adminEntity;
 
     @ManyToMany(type => produitEntity)
     @JoinTable({

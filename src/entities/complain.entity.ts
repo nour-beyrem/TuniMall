@@ -1,18 +1,24 @@
+import { ComplainTypeEnum } from './../enums/complain-type.enum';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { clientEntity } from "./client.entity";
+import { adminEntity } from "./admin.entity";
+
 import { TimestampEntity } from "./timestamp-entity";
 
 @Entity('complain')
 export class complainEntity extends TimestampEntity{
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column({type: 'varchar'})
+    @Column({type: 'enum',
+    enum: ComplainTypeEnum})
     sujet: string;
     @Column({type: 'varchar'})
-    description: string;
+    reclamation: string;
+
+    @Column({type: 'varchar'})
+    reponse: string;
    
-   @ManyToOne(type => clientEntity)
-    client: clientEntity;
+   @ManyToOne(type => adminEntity)
+    client: adminEntity;
 }
 
 

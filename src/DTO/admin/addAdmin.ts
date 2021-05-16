@@ -1,4 +1,4 @@
-import { IsNotEmpty, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, MaxLength, MinLength } from "class-validator";
 import { ErrorMessgaes } from "../error-message.common";
 
 export class AddAdminDto {
@@ -27,4 +27,17 @@ export class AddAdminDto {
         message: ErrorMessgaes.tooLong
       })
     cin: number;
+
+    @IsEmail()
+  @IsNotEmpty()
+  email: string
+
+  @IsNotEmpty()
+  password: string;
+
+  @IsNotEmpty()
+   role: string;
+
+  @IsNotEmpty()
+   username: string;
   }
