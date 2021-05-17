@@ -11,13 +11,13 @@ import { AdminModule } from '../admin/admin.module';
 @Module({
   controllers: [ComplainController],
   providers:[ComplainService],
-exports: [ComplainService],
-imports: [AdminModule,TypeOrmModule.forFeature([complainEntity]), PassportModule.register({defaultStrategy: 'jwt'}),JwtModule.register({
+  exports: [ComplainService],
+  imports: [AdminModule,TypeOrmModule.forFeature([complainEntity]), PassportModule.register({defaultStrategy: 'jwt'}),JwtModule.register({
   secret: 'nourSecretKey',
   signOptions: {
     expiresIn: 3600
   }
-})]
+   })]
   
 })
 export class ComplainModule {}

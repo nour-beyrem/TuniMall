@@ -23,6 +23,7 @@ export class ProduitService {
        async getById(id:string): Promise<produitEntity>
        {
          const produit =  await this.produitRepository.findOne(id);
+         console.log(produit);
          if (!produit)
            throw new NotFoundException(`produit d'id ${id} n'existe pas`);
           

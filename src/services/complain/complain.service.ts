@@ -30,23 +30,18 @@ export class ComplainService {
        }
 
 
-       async getComplainClient(client): Promise<complainEntity[]>
-        {
    
-           if (client.role === UserRoleEnum.CLIENT)
-               return await this.complainRepository.find({client});
   
   
-           throw new UnauthorizedException();
-        }
 
        async getById(id:string, user): Promise<complainEntity>
        {
          const complain =  await this.complainRepository.findOne(id);
+         console.log(complain);
          if (!complain)
             throw new NotFoundException(`complain d'id ${id} n'existe pas`);
          
-         if (user.role === UserRoleEnum.ADMINACHAT || complain.client.id === user.id)
+         if (user.role === UserRoleEnum.ADMINACHAT )
             return complain;
 
         else {
@@ -58,16 +53,16 @@ export class ComplainService {
        }
        
        
-       async addComplain(complainData: AddComplainDto, user): Promise<complainEntity>{
-        if (user.role === UserRoleEnum.CLIENT )
-        {
+       async addComplain(complainData: AddComplainDto): Promise<complainEntity>{
+        
+        
           const newComplain = this.complainRepository.create(complainData);
-          newComplain.client=user;
+          
           return await this.complainRepository.save(newComplain);
-        }
-        else {
-          throw new UnauthorizedException();
-        }
+        
+        
+        
+        
         
         
         
@@ -75,8 +70,8 @@ export class ComplainService {
        
        
          async deleteComplain(id: string,user): Promise<unknown> {
-          
-          if (user.role === UserRoleEnum.CLIENT ){
+          const complain =  await this.complainRepository.findOne(id);
+          if (user.role === UserRoleEnum.ADMINACHAT ){
 
             const deletedComplain = await this.complainRepository.delete(id);
             if(! deletedComplain) {
@@ -97,7 +92,7 @@ export class ComplainService {
          }
            
            
-         async putComplain(id: string, newComplain: updateComplainDto,user): Promise<complainEntity> {
+       /*  async putComplain(id: string, newComplain: updateComplainDto,user): Promise<complainEntity> {
            const updatedComplain = await this.complainRepository.preload({
              id,
              ...newComplain
@@ -111,7 +106,7 @@ export class ComplainService {
          }
          else 
            throw new UnauthorizedException();
-         }
+         }*/
 
          
 }

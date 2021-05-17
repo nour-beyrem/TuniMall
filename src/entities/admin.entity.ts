@@ -1,6 +1,7 @@
 
 import { UserRoleEnum } from "src/enums/user-role.enum";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { complainEntity } from "./complain.entity";
 import { livraisonEntity } from "./livraison.entity";
 import { TimestampEntity } from "./timestamp-entity";
 
@@ -40,6 +41,12 @@ export class adminEntity extends TimestampEntity{
     nullable: true
      })
     livraisons: livraisonEntity[]; 
+
+
+    @OneToMany( type =>complainEntity, (complain) =>complain.client,  {
+      nullable: true
+       })
+      complains: complainEntity[]; 
 
 
 

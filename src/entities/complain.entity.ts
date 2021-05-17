@@ -17,7 +17,12 @@ export class complainEntity extends TimestampEntity{
     @Column({type: 'varchar'})
     reponse: string;
    
-   @ManyToOne(type => adminEntity)
+   @ManyToOne(type => adminEntity ,(admin) => admin.complains,
+   {
+     
+     nullable: true,  eager: true
+    
+   })
     client: adminEntity;
 }
 

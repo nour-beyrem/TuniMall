@@ -27,7 +27,7 @@ export class produitEntity extends TimestampEntity{
       @ManyToOne( type=>shopEntity, (shop)=> shop.produits,
       {
         
-        nullable: true
+        nullable: true,  eager: true
        
       })
        shop: shopEntity;

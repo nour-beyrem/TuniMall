@@ -23,14 +23,8 @@ export class ComplainController {
        return this.complainService.getComplain(user);
     }
 
-    @Get('client')
-   @UseGuards(JwtAuthGuard)
-    getParClient( 
-      @User() user
-     ): Promise<complainEntity[]> {
-   return this.complainService.getComplainClient(user);
-    }
 
+    
     @Get(':id')
     @UseGuards(JwtAuthGuard)
     async getComplainById(
@@ -44,11 +38,10 @@ export class ComplainController {
 
 
     @Post()
-    @UseGuards(JwtAuthGuard)
     addComplain(
-      @Body() adminData:AddComplainDto , @User() user
+      @Body() adminData:AddComplainDto 
     ){
-      return this.complainService.addComplain(adminData, user);
+      return this.complainService.addComplain(adminData);
     }
 
     @Delete(':id')
@@ -59,14 +52,14 @@ export class ComplainController {
       return this.complainService.deleteComplain(id,user);
     }
 
-    @Put(':id')
+   /* @Put(':id')
      @UseGuards(JwtAuthGuard)
     updateComplain(
     @Param('id')id : string,
     @Body() newComplain: updateComplainDto , @User() user
       ): Promise<complainEntity> {
       return this.complainService.putComplain(id, newComplain,user);
-    }
+    }*/
 
 
 

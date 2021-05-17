@@ -33,6 +33,7 @@ export class AdminService {
     async getById(id:string, user): Promise<adminEntity>
     {
       const admin =  await this.adminRepository.findOne(id);
+      
 
       if (!admin)
         { 
@@ -167,6 +168,7 @@ export class AdminService {
       throw new NotFoundException('username ou password erronée');
     }
   }
+
 
     
     

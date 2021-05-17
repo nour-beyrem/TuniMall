@@ -22,11 +22,13 @@ export class livraisonEntity extends TimestampEntity{
 
     @ManyToOne(type => adminEntity, (livreur)=> livreur.livraisons,  {
         
-        nullable: true
+        nullable: true ,  eager: true
       })
     livreur: adminEntity; 
 
-    @ManyToOne( type=>adminEntity)
+    @ManyToOne( type=>adminEntity, (client)=> client.livraisons, {
+        nullable: true ,  eager: true
+    })
     client: adminEntity;
 
     @ManyToMany(type => produitEntity)
