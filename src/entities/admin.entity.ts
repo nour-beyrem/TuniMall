@@ -43,10 +43,10 @@ export class adminEntity extends TimestampEntity{
     livraisons: livraisonEntity[]; 
 
 
-    @OneToMany( type =>complainEntity, (complain) =>complain.client,  {
-      nullable: true
-       })
-      complains: complainEntity[]; 
+    
+    
+    
+    
 
 
 

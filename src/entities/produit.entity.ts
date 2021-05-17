@@ -1,6 +1,7 @@
 import { shopEntity } from './shop.entity';
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { TimestampEntity } from "./timestamp-entity";
+import { livraisonEntity } from './livraison.entity';
 
 @Entity('produit')
 export class produitEntity extends TimestampEntity{
@@ -31,6 +32,12 @@ export class produitEntity extends TimestampEntity{
        
       })
        shop: shopEntity;
+
+
+       @OneToMany( type=>livraisonEntity, (livraison)=> livraison.produit, {
+        nullable: true 
+    })
+      livraisons: produitEntity[];
    
 
 

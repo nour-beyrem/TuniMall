@@ -23,11 +23,10 @@ export class LivraisonController {
     }
 
     @Get('client')
-   @UseGuards(JwtAuthGuard)
-    getParClient( 
-      @User() user
+    getParEmail( 
+      @Param('email') email: string
      ): Promise<livraisonEntity[]> {
-   return this.livraisonService.getLivraisonByClient(user);
+   return this.livraisonService.getLivraisonByEmail(email);
     }
 
     @Get('livreur')
@@ -69,20 +68,20 @@ export class LivraisonController {
 
 
     @Post()
-    @UseGuards(JwtAuthGuard)
+    
     addLivraison(
       @Body() livraisonData:AddLivraisonDto , @User() user
     ){
       return this.livraisonService.addLivraison(livraisonData, user);
     }
 
-    @Delete(':id')
+   /* @Delete(':id')
     @UseGuards(JwtAuthGuard)
     deleteLivraison(
       @Param('id') id: string , @User() user
     ): Promise<unknown> {
       return this.livraisonService.deleteLivraison(id,user);
-    }
+    }*/
 
     @Put(':id')
      @UseGuards(JwtAuthGuard)

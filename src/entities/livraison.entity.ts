@@ -13,6 +13,8 @@ export class livraisonEntity extends TimestampEntity{
     cout: number;
     @Column({type: 'varchar'})
     adresse: string;
+    @Column({type: 'varchar'})
+    email: string;
 
     @Column({type: 'boolean'})
     approuver: boolean;
@@ -26,18 +28,10 @@ export class livraisonEntity extends TimestampEntity{
       })
     livreur: adminEntity; 
 
-    @ManyToOne( type=>adminEntity, (client)=> client.livraisons, {
+    @ManyToOne( type=>produitEntity, (produit)=> produit.livraisons, {
         nullable: true ,  eager: true
     })
-    client: adminEntity;
+    produit: produitEntity;
 
-    @ManyToMany(type => produitEntity)
-    @JoinTable({
-        name: 'panier',
-        joinColumn: { name: 'livraison_id', referencedColumnName: 'id'},
-        inverseJoinColumn: { name: 'produit_id', referencedColumnName: 'codeBar'},
-    })
-    panier: produitEntity [];
-   
 
 }

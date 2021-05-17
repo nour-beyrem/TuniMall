@@ -12,7 +12,9 @@ export class shopEntity extends TimestampEntity{
     path: string;
 
 
-    @OneToMany(type=>produitEntity, (produit) =>produit.shop)
+    @OneToMany(type=>produitEntity, (produit) =>produit.shop,{
+        cascade: true,
+    })
         produits: shopEntity[]; 
    
    

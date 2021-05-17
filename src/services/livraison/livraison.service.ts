@@ -27,19 +27,13 @@ export class LivraisonService {
          const livraison =  await this.livraisonRepository.findOne(id);
          if (!livraison)
            throw new NotFoundException(`livraison d'id ${id} n'existe pas`);
-         if (user.role === UserRoleEnum.ADMINACHAT || livraison.client.id === user.id || livraison.livreur.id=== user.id)
+         if (user.role === UserRoleEnum.ADMINACHAT || livraison.livreur.id=== user.id)
             return livraison;
          else
            throw new UnauthorizedException();
        }
        
-       getLivraisonByClient(client): Promise<livraisonEntity[]>
-        {
-          if (client.role === UserRoleEnum.CLIENT  )
-             return this.livraisonRepository.find({client});
-          throw new UnauthorizedException();
    
-         }
 
          getLivraisonNonValidé(user): Promise<livraisonEntity[]>
          {
@@ -51,7 +45,7 @@ export class LivraisonService {
           }
 
           getLivraisonTerminer(user): Promise<livraisonEntity[]>
-          {
+          { 
             const terminer = true;
             if (user.role === UserRoleEnum.ADMINACHAT )
                
@@ -66,22 +60,25 @@ export class LivraisonService {
               return this.livraisonRepository.find({livreur});
            throw new UnauthorizedException();
           }
+
+
+          getLivraisonByEmail(email): Promise<livraisonEntity[]>
+          {
+            
+               return this.livraisonRepository.find({email});
+            
+           }
+               
        
        async addLivraison(livraisonData: AddLivraisonDto, user): Promise<livraisonEntity> {
-          
-        if (user.role === UserRoleEnum.CLIENT )
-        {
-          const newLivraison = this.livraisonRepository.create(livraisonData);
-          newLivraison.client=user;
-          return await this.livraisonRepository.save(newLivraison);
-        }
-        else {
-          throw new UnauthorizedException();
-        }
+         
+          return await this.livraisonRepository.save(livraisonData);
+        
+      
          }
        
        
-         async deleteLivraison(id: string,user): Promise<unknown> {
+     /*    async deleteLivraison(id: string,user): Promise<unknown> {
           const livraison =  await this.livraisonRepository.findOne(id);
           if (user.role === UserRoleEnum.CLIENT || livraison.client.id === user.id){
             if (livraison.approuver === false){
@@ -100,10 +97,11 @@ export class LivraisonService {
           } else {
             throw new UnauthorizedException();
           }
-         }
+         }*/
            
            
      async putLivraison(id: string, newLivraison: updateLivraisonDto,user): Promise<livraisonEntity> {
+       const complain= await this.livraisonRepository.findOne(id);
            const updatedLivraison = await this.livraisonRepository.preload({
              id,
              ...newLivraison
@@ -112,39 +110,13 @@ export class LivraisonService {
         if (! updatedLivraison) {
            throw new NotFoundException(`Le livraison d'id ${id} n'existe pas`);
         }
-      
-      
-
         if (user.role === UserRoleEnum.ADMINACHAT ||user.id === updatedLivraison.livreur.id )
-           if (updatedLivraison.terminer === false)
+           if (complain.terminer === false)
               {return await this.livraisonRepository.save(updatedLivraison);}
-            else {throw new NotFoundException(`Le livraison d'id ${id} est  terminer donc vous ne pouver pas la modifier`);}
-           
-        
-        
-         
-        if (user.id === updatedLivraison.client.id )
-          if (updatedLivraison.approuver === false)
-            {return await this.livraisonRepository.save(updatedLivraison);}
-          else {throw new NotFoundException(`livraison d'id ${id} est déja approuver vous ne pouver pas la supprimer`);}
-
-       
-       
-       
-        
+           else {
+             throw new NotFoundException(`Le livraison d'id ${id} est  terminer donc vous ne pouver pas la modifier`);}
         
         throw new UnauthorizedException();
     
-
-          
-           
-        
-         
-        
-        
-        
-        
-        
-        
          }
 }
