@@ -92,5 +92,24 @@ export class LivraisonController {
       return this.livraisonService.putLivraison(id, newLivraison,user);
     }
 
+
+    @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  async SoftdeleteLivraison(
+    @Param('id') id: string,
+    @User() user
+  ) {
+    return this.livraisonService.softDeleteCommande(id, user);
+  }
+
+  @Get('recover/:id')
+  @UseGuards(JwtAuthGuard)
+  async restoreLivraison(
+    @Param('id') id: string,
+    @User() user
+  ) {
+    return await this.livraisonService.restoreCommnade(id, user);
+  }
+
     
 }

@@ -119,4 +119,31 @@ export class LivraisonService {
         throw new UnauthorizedException();
     
          }
+
+
+
+         async softDeleteCommande(id:string, user) {
+          const commande = await this.livraisonRepository.findOne({id});
+         
+          if (!commande) {
+            throw new NotFoundException('');
+          }
+          if (user.role === UserRoleEnum.ADMINACHAT )
+            return this.livraisonRepository.softDelete(id);
+          else
+            throw new UnauthorizedException('');
+        }
+
+        async restoreCommnade(id: string, user) {
+
+          const commande = await this.livraisonRepository.query("select * from livraison where id = ?", [id]);
+          if (!commande) {
+            throw new NotFoundException('');
+          }
+          if (user.role === UserRoleEnum.ADMINACHAT)
+            return this.livraisonRepository.restore(id);
+          else
+            throw new UnauthorizedException('');
+        }
+      
 }
