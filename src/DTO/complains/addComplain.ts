@@ -18,7 +18,7 @@ export class AddComplainDto {
     @MaxLength(10, {
       message: ErrorMessgaes.tooLong
     })
-    description: string;
+    reclamation: string;
     
     
     

@@ -20,15 +20,15 @@ export class ShopService {
        {}
       
       
-      async getShop(user): Promise<shopEntity[]>
+      async getShop(): Promise<shopEntity[]>
       {
-        if (user.role === UserRoleEnum.ADMINACHAT ||user.role === UserRoleEnum.ADMINAJOUT )
+        
            return await this.shopRepository.find();
         throw new UnauthorizedException();
       }
   
   
-      async getById(nom:string, user): Promise<shopEntity>
+      async getById(nom:string): Promise<shopEntity>
       {
         const shop =  await this.shopRepository.findOne(nom);
   
@@ -37,11 +37,11 @@ export class ShopService {
             throw new NotFoundException(`shop avec le nom ${nom} n'existe pas`);
           }
           
-        if (user.role === UserRoleEnum.ADMINACHAT ||user.role === UserRoleEnum.ADMINAJOUT)
-           return shop;
+       
+        return shop;
   
-        else 
-        throw new UnauthorizedException();
+        
+        
         
       }
   

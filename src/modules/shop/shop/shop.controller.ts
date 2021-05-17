@@ -15,20 +15,20 @@ export class ShopController {
 
 
     @Get()
-    @UseGuards(JwtAuthGuard)
+    
     getAll( 
-      @User() user
+      
     ): Promise<shopEntity[]> {
-       return this.shopService.getShop(user);
+       return this.shopService.getShop();
     }
 
 
     @Get(':nom')
-    @UseGuards(JwtAuthGuard)
-    async getAdminById(
-      @Param('nom') nom: string, @User() user
+    
+    async getShoById(
+      @Param('nom') nom: string
     ): Promise<shopEntity>{
-      const shop = await this.shopService.getById(nom,user);
+      const shop = await this.shopService.getById(nom);
       if (shop)
     
       return shop;

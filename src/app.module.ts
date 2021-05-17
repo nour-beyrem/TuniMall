@@ -14,8 +14,6 @@ import { LivraisonModule } from './modules/livraison/livraison.module';
 import { ComplainModule } from './modules/complain/complain.module';
 import { ConfigModule } from '@nestjs/config';
 import { ShopModule } from './modules/shop/shop.module';
-import { ShopService } from './services/shop/shop.service';
-
 
 
 @Module({
