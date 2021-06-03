@@ -22,8 +22,8 @@ export class produitEntity extends TimestampEntity{
     @Column({})
        quantite: number;
     
-    @Column({type: 'varchar'})
-      marque: string;
+    
+    
    
       @ManyToOne( type=>shopEntity, (shop)=> shop.produits,
       {
