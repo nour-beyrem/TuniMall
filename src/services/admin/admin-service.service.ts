@@ -160,8 +160,10 @@ export class AdminService {
         role: user.role
       };
       const jwt = await this.jwtService.sign(payload);
+      
       return {
-        "access_token" : jwt
+        "access_token" : jwt,
+        "user": user
       };
     } else {
       
@@ -180,6 +182,16 @@ export class AdminService {
   
   
   
+
+
+
+    
+    
+    
+  
+    
+    
+    
   
   
   

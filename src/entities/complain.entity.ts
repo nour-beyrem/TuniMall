@@ -14,6 +14,12 @@ export class complainEntity extends TimestampEntity{
     @Column({type: 'varchar'})
     reclamation: string;
 
+    @Column({type: 'varchar'})
+    nom: string;
+
+    @Column({type: 'varchar'})
+    prenom: string;
+
    
    
    

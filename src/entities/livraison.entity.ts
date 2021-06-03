@@ -15,6 +15,13 @@ export class livraisonEntity extends TimestampEntity{
     adresse: string;
     @Column({type: 'varchar'})
     email: string;
+    @Column({type: 'varchar'})
+    nom: string;
+    @Column({type: 'varchar'})
+   prenom: string;
+
+   @Column({})
+   cin: number;
 
     @Column({type: 'boolean'})
     approuver: boolean;
