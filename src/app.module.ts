@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +14,10 @@ import { LivraisonModule } from './modules/livraison/livraison.module';
 import { ComplainModule } from './modules/complain/complain.module';
 import { ConfigModule } from '@nestjs/config';
 import { ShopModule } from './modules/shop/shop.module';
+import { FirstMiddleware } from './Middlewares/first.middleware';
+import { secondMiddleware } from './Middlewares/second.middleware';
+import { HelmetMiddleware } from '@nest-middlewares/helmet';
+
 
 
 @Module({
@@ -34,4 +38,16 @@ import { ShopModule } from './modules/shop/shop.module';
   controllers: [AppController,],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer): any {
+    HelmetMiddleware.configure({});
+    consumer
+    .apply(HelmetMiddleware)
+    .forRoutes('')
+    .apply(FirstMiddleware)
+    .forRoutes('')
+    .apply(secondMiddleware)
+    .forRoutes('')
+    
+  }
+}
