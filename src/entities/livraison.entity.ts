@@ -18,8 +18,11 @@ export class livraisonEntity extends TimestampEntity{
     @Column({type: 'varchar'})
     nom: string;
     @Column({type: 'varchar'})
-   prenom: string;
+    prenom: string;
 
+   @Column({})
+   quantiteProduit: number;
+   
    @Column({})
    cin: number;
 

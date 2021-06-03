@@ -13,13 +13,13 @@ export class produitEntity extends TimestampEntity{
     nom: string;
     @Column({type: 'varchar'})
      type: string;
-     @Column({type: 'varchar'})
+    @Column({type: 'varchar'})
       categorie: string;
-      @Column({})
+    @Column({})
         price: number;
-        @Column({type: 'varchar'})
+    @Column({type: 'varchar'})
        couleur: string;
-       @Column({})
+    @Column({})
        quantite: number;
     
     @Column({type: 'varchar'})
