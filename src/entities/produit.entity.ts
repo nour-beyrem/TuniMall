@@ -21,6 +21,9 @@ export class produitEntity extends TimestampEntity{
        couleur: string;
     @Column({})
        quantite: number;
+
+    @Column({type: 'varchar'})
+      image: string;
     
     
     

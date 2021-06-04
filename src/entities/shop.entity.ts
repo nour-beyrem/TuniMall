@@ -11,6 +11,10 @@ export class shopEntity extends TimestampEntity{
     @Column({type: 'varchar'})
     path: string;
 
+    @Column({type: 'varchar'})
+       image: string;
+ 
+
 
     @OneToMany(type=>produitEntity, (produit) =>produit.shop,{
         cascade: true,
