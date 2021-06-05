@@ -22,7 +22,7 @@ export class LivraisonController {
        return this.livraisonService.getLivraison(user);
     }
 
-    @Get('client')
+    @Get('client/:email')
     getParEmail( 
       @Param('email') email: string
      ): Promise<livraisonEntity[]> {
